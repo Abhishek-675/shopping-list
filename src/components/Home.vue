@@ -1,7 +1,7 @@
 <template>
   <h1>Shopping List</h1>
   <form action="">
-    <input @keypress="add2($event)" type="text" placeholder="Add items" v-model="input">
+    <input @keypress="add2($event)" ref="input" type="text" placeholder="Add items" v-model="input">
     <button @click="add" type="button" class="add-btn">Add</button>
   </form>
   <h2>Items</h2>
@@ -46,9 +46,16 @@ export default {
     },
     del(e) {
       const toBeRemoved = e.target.parentNode.firstElementChild.textContent;
-      this.list.pop(toBeRemoved)
       // console.log(this.list)
+      const filtered = this.list.filter(item=>{
+        return item !== toBeRemoved
+      })
+      // console.log(filtered);
+      this.list = filtered;
     }
+  },
+  mounted(){
+    this.$refs.input.focus();
   }
 }
 </script>
